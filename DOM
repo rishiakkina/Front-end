@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo app</title>
+</head>
+<body>
+    <div>
+        <input type="text">
+        <button onclick="addTodo()">add todo</button>
+    </div>
+    <div class = "Todos"></div>
+    <script>
+        let todos = [];
+
+        document.querySelector("input").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                addTodo();
+            }else if(event.key === "Delete"){
+                deletTodo();
+            }
+        });
+
+        function addTodo(){
+            todos.push({
+                title: inp = document.querySelector("input").value
+            })
+            render();
+        }
+
+        function deleteTodo(i){
+            todos.splice(i-1,1);
+            render();
+        }
+
+        function createTodoComponent(i,todo){
+            let div = document.createElement("div");
+            let h4 = document.createElement("h4");
+            const button = document.createElement("button");
+            button.innerHTML = "delete";
+            button.onclick = (function(){
+                deleteTodo(i);
+            })
+            h4.innerText = i+"."+todo.title;
+            div.appendChild(h4);
+            div.appendChild(button);
+            return div;
+        }
+
+        function render(){
+            let ctr = 1;
+            const parent = document.querySelector(".Todos");
+            parent.innerHTML = "";
+            todos.forEach(todo=>{
+                parent.appendChild(createTodoComponent(ctr,todo));
+                ctr++;
+            })
+        }
+
+    </script>
+</body>
+</html>
